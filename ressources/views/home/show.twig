@@ -1,0 +1,46 @@
+{% extends "layouts/default.twig" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <h1>{{post.title}}</h1>
+            <p style="text-align:justify">{{post.content}}<br><br><span style="float:right">{{post.created_at}}</span>
+            </p>
+            <p><a href="{{ route('home.index') }}">Précédent</a> | <a href="{{ route('home.delete', {'id':post.id}) }}">Supprimer</a></p>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+
+    <div class="row">
+        <div style="width:90%; margin-left:8%">
+            <h3>Commentaires</h3>
+            {% for row in comments %}
+            <div style="border: 1px solid #DCDCDC; background:#F8F8FF; padding: 1%; text-align:justify; border-radius:8px;margin:2px">
+                <span>{{ row.user }}</span><br><br>
+                <span>{{ row.content }}</span>
+                <span style="float:right">{{ row.created_at }}</span><br>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <form method="POST" action="">
+    <hr>
+    <div class="form-group">
+        <label for="name">Nom :</label>
+        <input type="text" class="form-control" id="name" name="user">
+        <input type="hidden" class="form-control" id="idpost" value="{{ post.id }}" name="post_id">
+    </div>
+    <div class="form-group">
+        <label for="ckeditor">Votre commentaire ici :</label>
+        <textarea class="form-control" id="ckeditor" name="content"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Envoyer</button>    
+    </form>
+{% endblock %}
+
+{% block js %}
+<script src="/assets/ckeditor/ckeditor.js"></script>
+{% endblock %}
+

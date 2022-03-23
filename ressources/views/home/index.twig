@@ -1,0 +1,22 @@
+{% extends "layouts/default.twig" %}
+
+{% block content %}
+
+<div class="row row-cols-1 row-cols-md-2 g-4" >
+    {% for query in queries %}   
+
+  <div class="col">
+    <div class="card">
+      <img src="{{query.img}}" width= "220" height="220" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{query.title}}</h5>
+        <p class="card-text">{{ query.created_at }}</p>
+        <p class="card-text">{{ query.content[0:200] }}</p>
+        <a href="{{ route('home.show',{'id':query.id}) }}">Lire la suite</a>
+      </div>
+    </div>
+  </div>
+    
+    {% endfor %}
+    </div>
+{% endblock %}
