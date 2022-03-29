@@ -62,7 +62,9 @@ class Request
             $controller = $action[0];
             $controller = new $controller();
             $method = $action[1];
-            return isset($this->params) ? $controller->$method(implode($this->params)) : $controller->$method();
+            // return isset($this->params) ? $controller->$method(implode($this->params)) : $controller->$method();
+            //Appelle une fonction de rappel avec les paramètres rassemblés en tableau
+            call_user_func_array([$controller, $method], $this->params);
             // Sinon il m'execute cela
         } else {
             call_user_func_array($this->action, $this->params);
@@ -75,7 +77,10 @@ class Request
             $controller = $action[0];
             $controller = new $controller();
             $method = $action[1];
-            return isset($this->params) ? $controller->$method($this->request, implode($this->params)) : $controller->$method($this->request);
+            // return isset($this->params) ? $controller->$method($this->request, implode($this->params)) : $controller->$method($this->request);
+            //Empile un ou plusieurs éléments au début d'un tableau
+            array_unshift($this->params, $this->request);
+            call_user_func_array([$controller, $method], $this->params);
         } else {
             call_user_func_array($this->action, $this->params);
         }

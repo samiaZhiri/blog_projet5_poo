@@ -6,4 +6,5 @@ use Model;
 
 class Comment extends Model
 {
+    protected $guarded = [];
 }

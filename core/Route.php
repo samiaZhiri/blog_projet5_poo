@@ -2,7 +2,7 @@
 
 class Route
 {
-    private static $request;
+    private static $request; //elle sert a me stocké les routes
 
 
     public static function get(string $path, string $action)
@@ -13,7 +13,7 @@ class Route
         //je stocke avec une clé GET
         self::$request['GET'][] = $routes;
         /*je retourne l'instance de Request pour me permettre de faire
-        le chaînage aprés*/
+        le chaînage aprés ds mes routes ex : ->name('home.index')*/
         return $routes;
     }
     public static function post(string $path, string $action)
@@ -37,7 +37,7 @@ class Route
             {
                 //si la route est matché je vais avoir une méthode execute
                 //qui va executer tout et nous donner le resultat
-                $route->execute();
+                return $route->execute();
                 die(); //si je trouve ma route je stop ma boucle
             }
         }
@@ -60,9 +60,9 @@ class Route
                         //le tableau possède une clé et une valeur ex: ['id'=>1]
                         foreach ($parameters as $key => $value) {
                             //je veux remplacer le paramètre id $key par la valeur dans le $path 
-                            $url = str_replace("{{$key}}", $value, $path);
-                            return '/' . $url; //je concatène le resultat avec un /
+                            $path = str_replace("{{$key}}", $value, $path);
                         }
+                        return '/' . $path; //je concatène le resultat avec un /
                     } else { //si le parametre est vide on retourne juste un /
                         return '/' . $path;
                     }

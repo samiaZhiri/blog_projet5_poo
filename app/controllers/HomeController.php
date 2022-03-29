@@ -28,4 +28,18 @@ class HomeController extends Controller
     public function create(HttpRequest $request)
     {
     }
+    public function cmtcreate(HttpRequest $request)
+    {
+        //je veux récupérer l'id car je veux faire un commentaire
+        //sur un post, pour cela ds le form j'ai crée un champs input hidden
+        //et ds value j'ai mis post.id
+        $id = $request->name('post_id');
+
+        //je veux récupérer les autres champs
+        $feilds = $request->all(); //ca va récupéré un tableau avec 
+        //toutes les valeurs passées ds le form
+        Comment::create($feilds);
+        //je redirige le user sur la meme page
+        return redirect('home/show', ['id' => $id]);
+    }
 }
